@@ -55,7 +55,7 @@ class ConfigurationService
 
     public function getSimpleSAMLSelfURLHost()
     {
-        return HTTP::getSelfURLHost();
+        return HTTP::getSelfURLHost() . '/sso';
     }
 
     public function getOpenIdConnectModuleURL(string $path = null): string
