@@ -28,8 +28,19 @@ class AccessTokenEntity implements AccessTokenEntityInterface, MementoInterface
 {
     use AccessTokenTrait, TokenEntityTrait, EntityTrait, RevokeTokenTrait;
 
+    private $nonce;
+
     private function __construct()
     {
+    }
+
+    public function getNonce() {
+        return $this->nonce;
+    }
+
+    public function setNonce($nonce) {
+        $this->nonce = $nonce;
+        return $this;
     }
 
     /**
@@ -72,6 +83,10 @@ class AccessTokenEntity implements AccessTokenEntityInterface, MementoInterface
         $accessToken->client = $state['client'];
         $accessToken->isRevoked = (bool) $state['is_revoked'];
 
+        if (isset($state['nonce'])) {
+            $accessToken->setNonce($state['nonce']);
+        }
+
         return $accessToken;
     }
 
@@ -87,6 +102,7 @@ class AccessTokenEntity implements AccessTokenEntityInterface, MementoInterface
             'user_id' => $this->userIdentifier,
             'client_id' => $this->client->getIdentifier(),
             'is_revoked' => $this->isRevoked,
+            'nonce' => $this->nonce,
         ];
     }
 }

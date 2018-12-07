@@ -46,7 +46,7 @@ class AccessTokenRepository extends AbstractDatabaseRepository implements Access
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
         $this->database->write(
-            "INSERT INTO {$this->getTableName()} (id, scopes, expires_at, user_id, client_id, is_revoked) VALUES (:id, :scopes, :expires_at, :user_id, :client_id, :is_revoked)",
+            "INSERT INTO {$this->getTableName()} (id, scopes, expires_at, user_id, client_id, is_revoked, nonce) VALUES (:id, :scopes, :expires_at, :user_id, :client_id, :is_revoked, :nonce)",
             $accessTokenEntity->getState()
         );
     }
@@ -122,7 +122,7 @@ class AccessTokenRepository extends AbstractDatabaseRepository implements Access
     private function update(AccessTokenEntity $accessTokenEntity)
     {
         $this->database->write(
-            "UPDATE {$this->getTableName()} SET scopes = :scopes, expires_at = :expires_at, user_id = :user_id, client_id = :client_id, is_revoked = :is_revoked WHERE id = :id",
+            "UPDATE {$this->getTableName()} SET scopes = :scopes, expires_at = :expires_at, user_id = :user_id, client_id = :client_id, is_revoked = :is_revoked, nonce = :nonce WHERE id = :id",
             $accessTokenEntity->getState()
         );
     }

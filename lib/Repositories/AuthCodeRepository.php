@@ -36,7 +36,7 @@ class AuthCodeRepository extends AbstractDatabaseRepository implements AuthCodeR
     public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
     {
         $this->database->write(
-            "INSERT INTO {$this->getTableName()} (id, scopes, expires_at, user_id, client_id, is_revoked, redirect_uri) VALUES (:id, :scopes, :expires_at, :user_id, :client_id, :is_revoked, :redirect_uri)",
+            "INSERT INTO {$this->getTableName()} (id, scopes, expires_at, user_id, client_id, is_revoked, redirect_uri, nonce) VALUES (:id, :scopes, :expires_at, :user_id, :client_id, :is_revoked, :redirect_uri, :nonce)",
             $authCodeEntity->getState()
         );
     }
@@ -114,7 +114,7 @@ class AuthCodeRepository extends AbstractDatabaseRepository implements AuthCodeR
     private function update(AuthCodeEntity $authCodeEntity)
     {
         $this->database->write(
-            "UPDATE {$this->getTableName()} SET scopes = :scopes, expires_at = :expires_at, user_id = :user_id, client_id = :client_id, is_revoked = :is_revoked, redirect_uri = :redirect_uri WHERE id = :id",
+            "UPDATE {$this->getTableName()} SET scopes = :scopes, expires_at = :expires_at, user_id = :user_id, client_id = :client_id, is_revoked = :is_revoked, redirect_uri = :redirect_uri, nonce = :nonce WHERE id = :id",
             $authCodeEntity->getState()
         );
     }

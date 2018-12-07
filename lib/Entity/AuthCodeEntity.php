@@ -26,6 +26,17 @@ class AuthCodeEntity implements AuthCodeEntityInterface, MementoInterface
 {
     use EntityTrait, TokenEntityTrait, AuthCodeTrait, RevokeTokenTrait;
 
+    private $nonce;
+
+    public function getNonce() {
+        return $this->nonce;
+    }
+
+    public function setNonce($nonce) {
+        $this->nonce = $nonce;
+        return $this;
+    }
+
     public static function fromState(array $state)
     {
         $authCode = new self();
@@ -42,6 +53,10 @@ class AuthCodeEntity implements AuthCodeEntityInterface, MementoInterface
         $authCode->isRevoked = (bool) $state['is_revoked'];
         $authCode->redirectUri = $state['redirect_uri'];
 
+        if (isset($state['nonce'])) {
+            $authCode->setNonce($state['nonce']);
+        }
+
         return $authCode;
     }
 
@@ -55,6 +70,7 @@ class AuthCodeEntity implements AuthCodeEntityInterface, MementoInterface
             'client_id' => $this->client->getIdentifier(),
             'is_revoked' => $this->isRevoked,
             'redirect_uri' => $this->redirectUri,
+            'nonce' => $this->nonce,
         ];
     }
 }

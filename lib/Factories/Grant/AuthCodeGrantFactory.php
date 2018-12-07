@@ -14,7 +14,7 @@
 
 namespace SimpleSAML\Modules\OpenIDConnect\Factories\Grant;
 
-use League\OAuth2\Server\Grant\AuthCodeGrant;
+use SimpleSAML\Modules\OpenIDConnect\Server\Grant\AuthCodeGrantWithNonce;
 use SimpleSAML\Modules\OpenIDConnect\Repositories\AuthCodeRepository;
 use SimpleSAML\Modules\OpenIDConnect\Repositories\RefreshTokenRepository;
 
@@ -56,11 +56,11 @@ class AuthCodeGrantFactory
     }
 
     /**
-     * @return AuthCodeGrant
+     * @return AuthCodeGrantWithNonce
      */
     public function build()
     {
-        $authCodeGrant = new AuthCodeGrant(
+        $authCodeGrant = new AuthCodeGrantWithNonce(
             $this->authCodeRepository,
             $this->refreshTokenRepository,
             $this->authCodeDuration

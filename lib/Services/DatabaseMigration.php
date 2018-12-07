@@ -73,6 +73,11 @@ class DatabaseMigration
             $this->version20180425203400();
             $this->database->write("INSERT INTO ${versionsTablename} (version) VALUES ('20180425203400')");
         }
+
+        if (!\in_array('20181207105900', $versions, true)) {
+            $this->version20181207105900();
+            $this->database->write("INSERT INTO ${versionsTablename} (version) VALUES ('20181207105900')");
+        }
     }
 
     /**
@@ -167,6 +172,23 @@ EOT
         $this->database->write(<<< EOT
         ALTER TABLE ${clientTableName}
             ADD is_enabled BOOLEAN NOT NULL DEFAULT true
+EOT
+        );
+    }
+
+    private function version20181207105900()
+    {
+        $authCodeTableName = $this->database->applyPrefix(AuthCodeRepository::TABLE_NAME);
+        $this->database->write(<<< EOT
+        ALTER TABLE ${$authCodeTableName}
+            ADD nonce VARCHAR(255) NOT NULL
+EOT
+        );
+
+        $accessTokenTableName = $this->database->applyPrefix(AccessTokenRepository::TABLE_NAME);
+        $this->database->write(<<< EOT
+        ALTER TABLE ${$accessTokenTableName}
+            ADD nonce VARCHAR(255) NOT NULL
 EOT
         );
     }

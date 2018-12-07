@@ -86,6 +86,11 @@ class IdTokenResponse extends BearerTokenResponse
             ->setExpiration($accessToken->getExpiryDateTime()->getTimestamp())
             ->setSubject($userEntity->getIdentifier())
         ;
+        
+        $nonce = $accessToken->getNonce();
+        if (!empty($nonce)) {
+            $builder->set('nonce', $nonce);
+        }
 
         // Need a claim factory here to reduce the number of claims by provided scope.
         $claims = $this->claimExtractor->extract($accessToken->getScopes(), $userEntity->getClaims());
