@@ -180,15 +180,15 @@ EOT
     {
         $authCodeTableName = $this->database->applyPrefix(AuthCodeRepository::TABLE_NAME);
         $this->database->write(<<< EOT
-        ALTER TABLE ${$authCodeTableName}
-            ADD nonce VARCHAR(255) NOT NULL
+        ALTER TABLE ${authCodeTableName}
+            ADD nonce VARCHAR(255)
 EOT
         );
 
         $accessTokenTableName = $this->database->applyPrefix(AccessTokenRepository::TABLE_NAME);
         $this->database->write(<<< EOT
-        ALTER TABLE ${$accessTokenTableName}
-            ADD nonce VARCHAR(255) NOT NULL
+        ALTER TABLE ${accessTokenTableName}
+            ADD nonce VARCHAR(255)
 EOT
         );
     }

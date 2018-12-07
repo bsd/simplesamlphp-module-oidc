@@ -119,7 +119,7 @@ class AccessTokenRepository extends AbstractDatabaseRepository implements Access
         );
     }
 
-    private function update(AccessTokenEntity $accessTokenEntity)
+    public function update(AccessTokenEntity $accessTokenEntity)
     {
         $this->database->write(
             "UPDATE {$this->getTableName()} SET scopes = :scopes, expires_at = :expires_at, user_id = :user_id, client_id = :client_id, is_revoked = :is_revoked, nonce = :nonce WHERE id = :id",

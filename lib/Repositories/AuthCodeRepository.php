@@ -111,7 +111,7 @@ class AuthCodeRepository extends AbstractDatabaseRepository implements AuthCodeR
         );
     }
 
-    private function update(AuthCodeEntity $authCodeEntity)
+    public function update(AuthCodeEntity $authCodeEntity)
     {
         $this->database->write(
             "UPDATE {$this->getTableName()} SET scopes = :scopes, expires_at = :expires_at, user_id = :user_id, client_id = :client_id, is_revoked = :is_revoked, redirect_uri = :redirect_uri, nonce = :nonce WHERE id = :id",
